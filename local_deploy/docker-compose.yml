@@ -1,0 +1,31 @@
+version: "3.5"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "telegram"]
+      interval: 5s
+      retries: 5
+    env_file:
+      - ../.egor_bot/.env
+    environment:
+      PGDATA: /var/lib/postgresql/data/db-files/
+    volumes:
+      - ./pgdata/data-gov-il:/var/lib/postgresql/data/db-files
+  
+  bot:
+    build:
+      context: ../
+      dockerfile: base/Dockerfile
+    env_file:
+      - ../.egor_bot/secret.env
+      - ../.egor_bot/.env
+    container_name: bot
+    restart: on-failure
+    depends_on:
+      postgres:
+        condition: service_healthy

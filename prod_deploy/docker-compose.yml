@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+  bot:
+    image: public.ecr.aws/b4k2g9f3/egor-bot:latest
+    env_file:
+      - ../prod_override.env
+    container_name: bot
+    restart: on-failure

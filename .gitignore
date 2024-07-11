@@ -1,0 +1,16 @@
+pgdata/**
+pgdata/*
+pgdata
+.venv/**
+.venv/*
+.venv
+CV.docx
+.egor_bot/secret.env
+**/prod.tfvars
+prod.tfvars
+**/.terraform
+.terraform
+**/.terraform.lock.hcl
+.terraform.lock.hcl
+**/*.pyc
+*pyc
