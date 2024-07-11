@@ -25,6 +25,8 @@ services:
       - ../.egor_bot/secret.env
       - ../.egor_bot/.env
     container_name: bot
+    volumes:
+      - ../base:/app/base
     restart: on-failure
     depends_on:
       postgres:

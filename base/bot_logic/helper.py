@@ -1,6 +1,6 @@
 from telebot import types
-from ..db_utils.load import load_objects
-from ..db_configurations.metadata_tables import Request
+from ..db_utils.load import load_objects, merge_objects
+from ..db_configurations.metadata_tables import Request, User
 import datetime
 import uuid
 
@@ -20,11 +20,14 @@ def send_menu(bot, options_list, message, title):
 
 
 def log_requests(message_timestamp, username, firstname, lastname, command):
+    id = username
+    user = User(id=id,
+                firstname=firstname,
+                lastname=lastname)
+    merge_objects(user)
     message_request = Request(id=uuid.uuid4().hex,
                               message_timestamp=datetime.datetime
                               .fromtimestamp(message_timestamp),
-                              username=username,
-                              firstname=firstname,
-                              lastname=lastname,
-                              command=command)
+                              command=command,
+                              username=username)
     load_objects([message_request])
